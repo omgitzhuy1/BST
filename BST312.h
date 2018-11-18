@@ -339,9 +339,15 @@ template<class ItemType>
 int BST_312 <ItemType>::countNodes(TreeNode* t) const
 {
     //YOUR CODE GOES HERE
-    vector<ItemType> temp = inOrderTraversal();
-    return temp.size();
-
+    if (!isEmpty()){
+        if (t->left == NULL and t->right == NULL)
+            return 1;
+        else{
+            return countNodes(t->left) + countNodes(t->right);
+        }
+    }
+    else
+        return 0;
 }
 
 
