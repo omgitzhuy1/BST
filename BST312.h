@@ -4,7 +4,7 @@
 
   a simple implementation of a binary search tree
 
-
+  Edited by: Huy Do
 */
 
 #ifndef BST_312_H
@@ -61,7 +61,7 @@ Function: Adds newItem to the BST.
 Preconditions: BST has been initialized and is not full.
 Postconditions: newItem is in the proper position for a BST.
 *****************************/
-    void insertItem(const ItemType &);
+    void insertItem(const ItemType & newItem);
 
 /****************************
 deleteItem
@@ -225,6 +225,7 @@ void BST_312 <ItemType>::getPredecessor(TreeNode* t, ItemType& data)
 template<class ItemType>
 void BST_312 <ItemType>::deleteItem(TreeNode*& t, const ItemType& newItem)
 {
+    //YOUR CODE GOES HERE
     if (t == NULL)
         return;
     else if (newItem < t->data)
@@ -239,6 +240,7 @@ void BST_312 <ItemType>::deleteItem(TreeNode*& t, const ItemType& newItem)
 template<class ItemType>
 void BST_312 <ItemType>::deleteItem(const ItemType& newItem)
 {
+    //YOUR CODE GOES HERE
     deleteItem(root, newItem);
 
 }
@@ -294,36 +296,18 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem)
 
     //YOUR CODE GOES HERE
     if (t == NULL){
-        t = new TreeNode;
-        t->data = newItem;
-        t->left = NULL;
-        t->right = NULL;
+        TreeNode *newNode = new TreeNode;
+        newNode->data = newItem;
+        newNode->left = NULL;
+        newNode->right = NULL;
+        t = newNode;
     }
     else{
-        if (newItem<t->data){
-            if (t->left!=NULL)
-                insertItem(t->left, newItem);
-            else{
-                TreeNode* newNode = new TreeNode;
-                t->left = newNode;
-                newNode->data = newItem;
-                newNode->left = NULL;
-                newNode->right = NULL;
-            }
-        }
-        if (newItem>t->data){
-            if (t->left!=NULL)
-                insertItem(t->right, newItem);
-            else{
-                TreeNode* newNode = new TreeNode;
-                t->right = newNode;
-                newNode->data = newItem;
-                newNode->left = NULL;
-                newNode->right = NULL;
-            }
-        }
+        if (newItem<t->data)
+            insertItem(t->left, newItem);
+        if (newItem>t->data)
+            insertItem(t->right, newItem);
     }
-
 }
 
 template<class ItemType>
@@ -339,15 +323,15 @@ template<class ItemType>
 int BST_312 <ItemType>::countNodes(TreeNode* t) const
 {
     //YOUR CODE GOES HERE
-    if (!isEmpty()){
+    const int increment = 1;
+    if (t!=NULL){
         if (t->left == NULL and t->right == NULL)
-            return 1;
+            return increment;
         else{
-            return countNodes(t->left) + countNodes(t->right);
+            return increment + countNodes(t->left) + countNodes(t->right);
         }
     }
-    else
-        return 0;
+    else return 0;
 }
 
 
@@ -428,7 +412,7 @@ bool BST_312 <ItemType>::isItemInTree(const ItemType& item)
   //YOUR CODE GOES HERE
   vector<ItemType> temp = postOrderTraversal();
   if (!temp.empty()){
-      for(int i = 0; i<=temp.size; i++) {
+      for(int i = 0; i<=temp.size(); i++) {
           if (temp[i] == item)
               return true;
       }
